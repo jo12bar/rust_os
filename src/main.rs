@@ -65,10 +65,3 @@ fn panic(info: &PanicInfo) -> ! {
     exit_qemu(QemuExitCode::Failed);
     loop {}
 }
-
-#[test_case]
-fn trivial_assertion() {
-    serial_print!("trivial assertion... ");
-    assert_eq!(0, 1);
-    serial_println!("[ok]");
-}
