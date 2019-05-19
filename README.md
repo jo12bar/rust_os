@@ -1,4 +1,7 @@
 # `rust_os`
+
+[![Build Status](https://travis-ci.com/jo12bar/rust_os.svg?branch=master)](https://travis-ci.com/jo12bar/rust_os)
+
 My implementation of [this **amazing** guide](https://os.phil-opp.com/).
 
 ## Dependencies
