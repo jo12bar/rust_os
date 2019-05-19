@@ -1,6 +1,9 @@
 os: linux
 sudo: false
 
+notifications:
+  email: false
+
 cache:
   cargo: true
   directories:
