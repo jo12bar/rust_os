@@ -2,8 +2,10 @@ os: linux
 sudo: false
 
 cache:
+  cargo: true
   directories:
     - $HOME/qemu
+  timeout: 7200
 
 language: rust
 rust:
