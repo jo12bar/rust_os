@@ -1,0 +1,27 @@
+os: linux
+sudo: false
+
+cache:
+  directories:
+    - $HOME/qemu
+
+language: rust
+rust:
+  - nightly
+
+before_install:
+  - rustup component add rust-src
+  - rustup component add llvm-tools-preview
+
+install:
+  - cargo install cargo-xbuild
+  - cargo install bootimage --version "^0.7.3"
+
+before_script:
+  - bash -e travis-qemu.bash
+  - export PATH=$PATH:$HOME/qemu/bin
+
+script:
+  - cargo xbuild
+  - cargo bootimage
+  - cargo xtest
