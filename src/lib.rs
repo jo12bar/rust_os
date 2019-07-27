@@ -16,13 +16,14 @@ pub mod serial;
 pub mod vga_buffer;
 
 use core::panic::PanicInfo;
+use linked_list_allocator::LockedHeap;
 
 #[cfg(test)]
 use bootloader::{BootInfo, entry_point};
 
 /// The global heap allocator.
 #[global_allocator]
-static ALLOCATOR: allocator::Dummy = allocator::Dummy;
+static ALLOCATOR: LockedHeap = LockedHeap::empty();
 
 /// Initialize everything.
 pub fn init() {
