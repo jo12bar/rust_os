@@ -5,6 +5,9 @@
 #![test_runner(rust_os::test_runner)]
 #![reexport_test_harness_main = "test_main"]
 
+extern crate alloc;
+
+use alloc::boxed::Box;
 use bootloader::{BootInfo, entry_point};
 use core::panic::PanicInfo;
 use rust_os::println;
@@ -31,6 +34,9 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
     // Write the string `New!` to the screen through the new mapping
     let page_ptr: *mut u64 = page.start_address().as_mut_ptr();
     unsafe { page_ptr.offset(400).write_volatile(0x_f021_f077_f065_f04e) };
+
+    // Test allocating a value on the heap.
+    let x = Box::new(4);
 
     #[cfg(test)]
     test_main();

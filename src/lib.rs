@@ -2,9 +2,13 @@
 #![cfg_attr(test, no_main)]
 #![feature(abi_x86_interrupt)]
 #![feature(custom_test_frameworks)]
+#![feature(alloc_error_handler)]
 #![test_runner(crate::test_runner)]
 #![reexport_test_harness_main = "test_main"]
 
+extern crate alloc;
+
+pub mod allocator;
 pub mod gdt;
 pub mod interrupts;
 pub mod memory;
@@ -15,6 +19,10 @@ use core::panic::PanicInfo;
 
 #[cfg(test)]
 use bootloader::{BootInfo, entry_point};
+
+/// The global heap allocator.
+#[global_allocator]
+static ALLOCATOR: allocator::Dummy = allocator::Dummy;
 
 /// Initialize everything.
 pub fn init() {
@@ -28,6 +36,12 @@ pub fn hlt_loop() -> ! {
     loop {
         x86_64::instructions::hlt();
     }
+}
+
+/// Custom handler for heap allocation errors.
+#[alloc_error_handler]
+fn alloc_error_handler(layout: alloc::alloc::Layout) -> ! {
+    panic!("allocation error: {:?}", layout)
 }
 
 /// Custom test runner. Currently requires nightly rust.
