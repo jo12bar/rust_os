@@ -4,17 +4,28 @@ version = "0.1.0"
 authors = ["Johann Barnard <johann.b@telus.net>"]
 edition = "2018"
 
-[profile.dev]
-panic = "abort"
-
-[profile.release]
-panic = "abort"
-
 [dependencies]
 bootloader = "0.9.11"
 spin = "0.5.2"
+uart_16550 = "0.2.10"
 volatile = "0.2.7"
+x86_64 = "0.12.2"
 
 [dependencies.lazy_static]
 version = "1.4"
 features = ["spin_no_std"]
+
+[package.metadata.bootimage]
+test-args = [
+    # Enable the kernel to exit from QEMU after running tests:
+    "-device", "isa-debug-exit,iobase=0xf4,iosize=0x04",
+
+    # Hook up the serial port to stdio.
+    "-serial", "stdio",
+
+    # Hide QEMU.
+    "-display", "none"
+]
+# Remap QemuExitCodes::Success to exit code 0 so cargo actually realizes the tests
+# passed.
+test-success-exit-code = 33  # = (0x10 << 1) | 1
