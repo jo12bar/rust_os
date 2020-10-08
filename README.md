@@ -1,6 +1,6 @@
 # `rust_os`
 
-[![Build Status](https://travis-ci.com/jo12bar/rust_os.svg?branch=master)](https://travis-ci.com/jo12bar/rust_os)
+[![Build Code](https://github.com/jo12bar/rust_os/workflows/Build%20Code/badge.svg)](https://github.com/jo12bar/rust_os/actions?query=workflow%3A%22Build+Code%22)
 
 My implementation of [this **amazing** guide](https://os.phil-opp.com/).
 
@@ -9,15 +9,15 @@ My implementation of [this **amazing** guide](https://os.phil-opp.com/).
 ```shell
 $ rustup component add rust-src
 $ rustup component add llvm-tools-preview
-$ cargo install cargo-xbuild
-$ cargo install bootimage --version "^0.7.3"
+$ cargo install
+$ cargo install bootimage
 ```
 
 ##  Building
 To build a standalone executable:
 
 ```shell
-$ cargo xbuild
+$ cargo build
 ```
 
 To build a bootable disk image:
@@ -30,5 +30,5 @@ $ cargo bootimage
 First, install QEMU. Next, run:
 
 ```shell
-$ cargo xrun
+$ cargo run
 ```
