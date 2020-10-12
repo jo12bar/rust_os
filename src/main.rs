@@ -14,7 +14,7 @@ use rust_os::println;
 /// That also means that we have to avoid mangling the function's name.
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
-    println!("Hello World{}", "!");
+    println!("Hello World!");
 
     // If this kernal was started via `cargo test`, then run all the tests.
     #[cfg(test)]

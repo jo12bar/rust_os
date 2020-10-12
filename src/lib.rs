@@ -30,7 +30,7 @@ pub fn exit_qemu(exit_code: QemuExitCode) {
 /// automatically printing the function's name when it is ran, for example.
 pub trait Testable {
     /// Run the `Testable`.
-    fn run(&self) -> ();
+    fn run(&self);
 }
 
 /// Makes any `Fn()` `Testable`, which allows us to print its name to serial,
@@ -39,7 +39,7 @@ impl<T> Testable for T
 where
     T: Fn(),
 {
-    fn run(&self) -> () {
+    fn run(&self) {
         serial_print!("{}...\t", core::any::type_name::<T>());
         self();
         serial_println!("[ok]");
