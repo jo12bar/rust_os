@@ -16,10 +16,16 @@ use rust_os::println;
 pub extern "C" fn _start() -> ! {
     println!("Hello World!");
 
+    rust_os::init();
+
+    // Invoke a breakpoint exception:
+    x86_64::instructions::interrupts::int3();
+
     // If this kernal was started via `cargo test`, then run all the tests.
     #[cfg(test)]
     test_main();
 
+    println!("It did not crash!");
     loop {}
 }
 
