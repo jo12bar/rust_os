@@ -18,9 +18,6 @@ pub extern "C" fn _start() -> ! {
 
     rust_os::init();
 
-    // Invoke a breakpoint exception:
-    x86_64::instructions::interrupts::int3();
-
     // If this kernal was started via `cargo test`, then run all the tests.
     #[cfg(test)]
     test_main();
