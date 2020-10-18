@@ -16,7 +16,7 @@ entry_point!(kernel_main);
 /// Main kernel entry point. Uses the Linux convention of being called `_start`.
 /// That also means that we have to avoid mangling the function's name.
 pub fn kernel_main(boot_info: &'static BootInfo) -> ! {
-    use rust_os::memory;
+    use rust_os::memory::{self, BootInfoFrameAllocator};
     use x86_64::{structures::paging::Page, VirtAddr};
 
     println!("Hello World!");
@@ -25,7 +25,7 @@ pub fn kernel_main(boot_info: &'static BootInfo) -> ! {
 
     let phys_mem_offset = VirtAddr::new(boot_info.physical_memory_offset);
     let mut mapper = unsafe { memory::init(phys_mem_offset) };
-    let mut frame_allocator = memory::EmptyFrameAllocator;
+    let mut frame_allocator = unsafe { BootInfoFrameAllocator::init(&boot_info.memory_map) };
 
     // Map an unused page
     let page = Page::containing_address(VirtAddr::new(0));
