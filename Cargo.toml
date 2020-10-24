@@ -14,6 +14,7 @@ harness = false
 
 [dependencies]
 bootloader = { version = "0.9.11", features = ["map_physical_memory"]}
+linked_list_allocator = "0.8.6"
 pc-keyboard = "0.5.1"
 pic8259_simple = "0.2.0"
 spin = "0.5.2"
