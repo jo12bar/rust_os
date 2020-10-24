@@ -12,7 +12,19 @@ extern crate alloc;
 use alloc::{boxed::Box, rc::Rc, vec, vec::Vec};
 use bootloader::{entry_point, BootInfo};
 use core::panic::PanicInfo;
-use rust_os::println;
+use rust_os::{
+    println,
+    task::{simple_executor::SimpleExecutor, Task},
+};
+
+async fn async_number() -> u32 {
+    42
+}
+
+async fn example_task() {
+    let number = async_number().await;
+    println!("async number: {}", number);
+}
 
 entry_point!(kernel_main);
 
@@ -62,6 +74,10 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
         "reference count is {} now",
         Rc::strong_count(&cloned_reference)
     );
+
+    let mut executor = SimpleExecutor::new();
+    executor.spawn(Task::new(example_task()));
+    executor.run();
 
     // If this kernel was started via `cargo test`, then run all the tests.
     #[cfg(test)]
