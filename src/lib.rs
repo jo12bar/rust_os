@@ -5,6 +5,7 @@
 #![feature(const_in_array_repeat_expressions)]
 #![feature(const_mut_refs)]
 #![feature(custom_test_frameworks)]
+#![feature(wake_trait)]
 #![test_runner(crate::test_runner)]
 #![reexport_test_harness_main = "test_main"]
 
